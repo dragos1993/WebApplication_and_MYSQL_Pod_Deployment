@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/dragos1993/githubactions-webapp.git
+    repoURL: https://github.com/dragos1993/best-app.git
     targetRevision: HEAD
     path: dev
   destination:
