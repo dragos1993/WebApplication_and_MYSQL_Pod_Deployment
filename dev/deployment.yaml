@@ -17,6 +17,6 @@ spec:
         - name: acr-auth
       containers:
         - name: webapp
-          image: aksdevopsacr1.azurecr.io/argocd-web-app:19
+          image: aksdevopsacr1.azurecr.io/argocd-web-app:latest
           ports:
             - containerPort: 80
