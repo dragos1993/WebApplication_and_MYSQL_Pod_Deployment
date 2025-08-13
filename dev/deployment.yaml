@@ -12,6 +12,8 @@ spec:
       labels:
         app: webapp
     spec:
+      imagePullSecrets:
+        - name: acr-auth
       containers:
         - name: webapp
           image: aksdevopsacr1.azurecr.io/argocd-web-app:latest
