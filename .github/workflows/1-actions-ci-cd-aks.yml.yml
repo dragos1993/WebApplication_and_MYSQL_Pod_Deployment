@@ -74,7 +74,3 @@ jobs:
     - name: Apply Kubernetes Deployment
       run: |
         kubectl apply --validate=false -f application.yaml -n argocd
-
-    - name: ArgoCD Application Sync
-      run: |
-        argocd app sync argocd-web-app
