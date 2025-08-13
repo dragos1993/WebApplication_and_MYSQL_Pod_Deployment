@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/dragos1993/githubactions-webapp.git
+    repoURL: aksdevopsacr1.azurecr.io/argocd-web-app:latest
     targetRevision: HEAD
     path: dev
   destination:
