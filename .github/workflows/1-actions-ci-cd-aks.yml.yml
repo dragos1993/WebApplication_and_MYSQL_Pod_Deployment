@@ -13,8 +13,8 @@ jobs:
   build-deploy-aks:
     runs-on: ubuntu-latest
     env:
-      ACR_NAME: aksdevopsacr1.azurecr.io
-      IMAGE_NAME: argocd-web-app
+      ACR_NAME: acrrg3.azurecr.io
+      IMAGE_NAME: kube-usermgmt-webapp:1.0.0-MySQLDB
       IMAGE_TAG: ${{ github.run_number }}
 
     steps:
@@ -25,11 +25,11 @@ jobs:
     - name: Azure Login
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ secrets.AZURE_CREDENTIALS1 }}
 
     - name: Azure Container Registry Login
       run: |
-        az acr login --name aksdevopsacr1
+        az acr login --name acrrg3
 
     - name: Build Docker Image
       run: |
@@ -67,10 +67,11 @@ jobs:
       uses: Azure/aks-set-context@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-        cluster-name: acr-demo2
-        resource-group: acr-rg2
+        cluster-name: aksdemo3
+        resource-group: aks-rg3
 
 
     - name: Apply Kubernetes Deployment
       run: |
-        kubectl apply --validate=false -f application.yaml -n argocd
+        kubectl apply --validate=false -f application-mysql.yaml -n argocd
+        kubectl apply --validate=false -f application-webapp.yaml -n argocd
