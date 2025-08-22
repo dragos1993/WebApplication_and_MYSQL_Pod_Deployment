@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ACR_NAME: acrrg3.azurecr.io
-      IMAGE_NAME: kube-usermgmt-webapp:1.0.0-MySQLDB
+      BASE_TAG: 1.0.0-MySQLDB
+      IMAGE_NAME: kube-usermgmt-webapp
       IMAGE_TAG: ${{ github.run_number }}
 
     steps:
@@ -31,12 +32,14 @@ jobs:
       run: |
         az acr login --name acrrg3
 
-    - name: Build Docker Image
+    - name: Pull Existing Image
       run: |
-        docker build ./App/ \
-          --file ./App/Dockerfile \
-          --tag $ACR_NAME/$IMAGE_NAME:$IMAGE_TAG \
-          --no-cache
+        docker pull $ACR_NAME/$IMAGE_NAME:$BASE_TAG
+
+    - name: Retag Image
+      run: |
+        docker tag $ACR_NAME/$IMAGE_NAME:$BASE_TAG \
+                   $ACR_NAME/$IMAGE_NAME:$IMAGE_TAG
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
@@ -48,8 +51,8 @@ jobs:
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'MEDIUM,HIGH,CRITICAL'
-        
-    - name: Push Image to ACR
+
+    - name: Push New Tag to ACR
       run: |
         docker push $ACR_NAME/$IMAGE_NAME:$IMAGE_TAG
 
@@ -70,8 +73,8 @@ jobs:
         cluster-name: aksdemo3
         resource-group: aks-rg3
 
-
     - name: Apply Kubernetes Deployment
       run: |
+        kubectl apply --validate=false -f dev/ -n argocd
         kubectl apply --validate=false -f application-mysql.yaml -n argocd
         kubectl apply --validate=false -f application-webapp.yaml -n argocd
