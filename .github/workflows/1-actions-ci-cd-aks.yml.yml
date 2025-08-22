@@ -69,12 +69,14 @@ jobs:
     - name: Set AKS context
       uses: Azure/aks-set-context@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ secrets.AZURE_CREDENTIALS1 }}
         cluster-name: aksdemo3
         resource-group: aks-rg3
 
     - name: Apply Kubernetes Deployment
       run: |
         kubectl apply --validate=false -f dev/ -n argocd
+        sleep 10
         kubectl apply --validate=false -f application-mysql.yaml -n argocd
+        sleep 10
         kubectl apply --validate=false -f application-webapp.yaml -n argocd
