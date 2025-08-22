@@ -73,6 +73,7 @@ jobs:
         cluster-name: aksdemo3
         resource-group: aks-rg3
 
+
     - name: Apply Kubernetes Deployment
       run: |
         kubectl apply --validate=false -f dev/ -n argocd
