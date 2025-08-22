@@ -2,13 +2,14 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: azure-managed-disk-pvc
+  namespace: argocd
 spec:
   accessModes:
-  - ReadWriteOnce
-  storageClassName: managed-premium-retain-sc 
+    - ReadWriteOnce
+  storageClassName: managed-csi
   resources:
     requests:
-      storage: 5Gi      
+      storage: 5Gi   
 
 # AKS already provisioned Storage classes managed-premium and default as part of 
 # default cluster setup      
