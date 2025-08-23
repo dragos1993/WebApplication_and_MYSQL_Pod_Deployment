@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginxapp1-ingress-service
+  namespace: argocd
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: usermgmt-webapp-service
+                port:
+                  number: 80
+          - path: /login
+            pathType: Prefix
+            backend:
+              service:
+                name: usermgmt-webapp-service
+                port:
+                  number: 80
