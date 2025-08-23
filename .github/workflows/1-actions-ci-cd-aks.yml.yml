@@ -72,12 +72,16 @@ jobs:
         IMAGE_NAME: ${{ env.IMAGE_NAME }}
         IMAGE_TAG: ${{ env.IMAGE_TAG }}
 
+    - name: Install kubelogin
+      run: |
+        curl -LO https://github.com/Azure/kubelogin/releases/latest/download/kubelogin-linux-amd64.zip
+        unzip kubelogin-linux-amd64.zip
+        sudo mv kubelogin /usr/local/bin/
+        kubelogin --version
+
     - name: Set AKS context
       uses: Azure/aks-set-context@v2.3
       with:
-        client-id: 68680534-e093-40f4-bf5e-02f659e52bca
-        tenant-id: 7228ccd0-4940-47c3-8fc6-ac0294a7a2a0
-        subscription-id: 004003ac-1525-495b-ad86-c3fe74dc9f29
         resource-group: aks-rg3
         cluster-name: aksdemo3
         use-kubelogin: true
