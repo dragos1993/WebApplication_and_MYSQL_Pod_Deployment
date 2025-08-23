@@ -23,10 +23,13 @@ jobs:
     - name: Git Checkout
       uses: actions/checkout@v2
 
-    - name: Azure Login
+    - name: Azure Login (OIDC)
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS1 }}
+        client-id: 68680534-e093-40f4-bf5e-02f659e52bca
+        tenant-id: 7228ccd0-4940-47c3-8fc6-ac0294a7a2a0
+        subscription-id: 004003ac-1525-495b-ad86-c3fe74dc9f29
+        auth-type: federated
 
     - name: Azure Container Registry Login
       run: |
@@ -69,10 +72,13 @@ jobs:
     - name: Set AKS context
       uses: Azure/aks-set-context@v2.3
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS1 }}
-        cluster-name: aksdemo3
+        client-id: 68680534-e093-40f4-bf5e-02f659e52bca
+        tenant-id: 7228ccd0-4940-47c3-8fc6-ac0294a7a2a0
+        subscription-id: 004003ac-1525-495b-ad86-c3fe74dc9f29
         resource-group: aks-rg3
+        cluster-name: aksdemo3
         use-kubelogin: true
+        auth-type: federated
 
     - name: Apply Kubernetes Deployment
       run: |
