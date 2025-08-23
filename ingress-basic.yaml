@@ -15,10 +15,3 @@ spec:
                 name: usermgmt-webapp-service
                 port:
                   number: 80
-          - path: /login
-            pathType: Prefix
-            backend:
-              service:
-                name: usermgmt-webapp-service
-                port:
-                  number: 80
