@@ -46,3 +46,12 @@ spec:
                 secretKeyRef:
                   name: mysql-db-password
                   key: db-password
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/application.properties
+              subPath: application.properties
+          command: ["java", "-jar", "root.jar", "--spring.config.location=file:/config/application.properties"]
+      volumes:
+        - name: config-volume
+          configMap:
+            name: usermgmt-config
