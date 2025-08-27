@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: usermgmt-config
-  namespace: argocd
-data:
-  application.properties: |
-    server.forward-headers-strategy=framework
-    server.use-forward-headers=true
