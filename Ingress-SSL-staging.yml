@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-ssl
+  namespace: argocd
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    argocd.argoproj.io/sync-wave: "1"  # Ensures this Ingress syncs after cert-manager and ClusterIssuer
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: surfacesystems.space
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: usermgmt-webapp-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - surfacesystems.space
+      secretName: surfacesystems-secret  # Must exist in the 'argocd' namespace
