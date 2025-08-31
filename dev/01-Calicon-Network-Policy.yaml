@@ -1,0 +1,23 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: mysql-access-policy
+  namespace: argocd
+spec:
+  selector: app == 'mysql'
+  types:
+    - Ingress
+    - Egress
+  ingress:
+    - action: Allow
+      protocol: TCP
+      source:
+        selector: app == 'usermgmt-webapp'
+      destination:
+        ports:
+          - 3306
+  egress:
+    - action: Allow
+      protocol: TCP
+      destination:
+        selector: all()
