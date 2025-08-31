@@ -15,7 +15,6 @@ spec:
       labels: 
         app: usermgmt-webapp
     spec:
-      serviceAccountName: usermgmt-sa
       initContainers:
         - name: init-db
           image: busybox:1.31
@@ -39,4 +38,4 @@ spec:
               valueFrom: 
                 secretKeyRef:
                   name: mysql-db-password
-                  key: db-password
+                  key: db-password       
