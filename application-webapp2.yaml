@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/dragos1993/top1.git
     targetRevision: HEAD
-    path: dev-webapp2
+    path: ServiceAccount
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
